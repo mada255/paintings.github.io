@@ -160,7 +160,13 @@ Serviciile api folosesc cate un apiKey, care sunt momentan puse in clar in cod.
 
 Capturi ecran aplicație 
 
+Prima pagina:
 
+![Prima pagina](/Capture1.JPG)
+
+
+
+![Pagina cu formularul](/Capture2.JPG)
 
 
 
