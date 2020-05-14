@@ -1,6 +1,6 @@
-<h1>App for paintings<h1/>
+<h1>App for paintings</h1>
 
-Introducere
+*Introducere*
 
 Aceasta este o aplicatie de "licitare" pentru anumite imagini / tablouri.
 
