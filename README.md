@@ -183,9 +183,9 @@ Pagina cu formularul:
 
 <h2>Referinte</h2>
 
-https://www.harvardartmuseums.org/ - automatic!
+https://www.harvardartmuseums.org/ 
 
-https://mailboxlayer.com/ - automatic!
+https://mailboxlayer.com/ 
 
 
 
