@@ -1,4 +1,4 @@
-App for paintings
+<h1>App for paintings<h1/>
 
 Introducere
 
@@ -162,8 +162,11 @@ Capturi ecran aplicație
 
 Prima pagina:
 
+
 ![Prima pagina](/Capture1.JPG)
 
+
+Pagina cu formularul:
 
 
 ![Pagina cu formularul](/Capture2.JPG)
