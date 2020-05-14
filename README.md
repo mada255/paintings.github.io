@@ -1,10 +1,10 @@
-<h1>App for paintings</h1>
+<h1>Paintings App</h1>
 
-*Introducere*
+<h2>*Introducere*</h2>
 
 Aceasta este o aplicatie de "licitare" pentru anumite imagini / tablouri.
 
-Descriere problemă 
+<h2>*Descriere problemă*</h2>
 
 Aplicatia pune la dispozitie o lista de imagini, care sunt procurate folosind un api de la Harvdard Museum, pe care utilizatorul poate sa le "cumpere", acesta primind mai departe un e-mail cu datele respective.
 
