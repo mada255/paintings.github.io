@@ -21,13 +21,11 @@
         
             const init = function(e){
                 let spn_name = document.querySelector('#imagename');
-                let spn_image = document.querySelector('#imageurl');
                 let id = localStorage.getItem('id');
                 let name = localStorage.getItem('name');
                 let image = localStorage.getItem('imageurl');
                 document.getElementById('image').src = image;
                 spn_name.innerHTML = name;
-                spn_image.innerHTML = image;
             };
             
             document.addEventListener('DOMContentLoaded', function() {

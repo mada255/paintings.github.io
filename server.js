@@ -17,9 +17,10 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('art', 'madalina', '1234', {
+const sequelize = new Sequelize('art', 'root', '1234', {
     dialect: "mysql",
-    host: "localhost"
+    host: "34.65.99.96",
+    port: 3306
 });
 
 sequelize.authenticate().then(() => {
