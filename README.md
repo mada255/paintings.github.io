@@ -8,32 +8,32 @@ Aceasta este o aplicatie de "licitare" pentru anumite imagini / tablouri.
 
 Aplicatia pune la dispozitie o lista de imagini, care sunt procurate folosind un api de la Harvdard Museum, pe care utilizatorul poate sa le "cumpere", acesta primind mai departe un e-mail cu datele respective.
 
-Descriere API
+<h2>Descriere API</h2>
 
 Am folosit 2 api-uri, unul de la muzeul hardvard (https://www.harvardartmuseums.org/), ce returneaza o lista de obiecte in format JSON, alcatuite din: url-ul imaginii, data, copyright.
 
 Un alt api folosit este cel de la mailboxlayer, pentru verificarea adresei de e-mail introdusa de utilizator. Acest api primeste un request, si trimite inapoi un raspuns ce contine date despre corectitudinea formatului adresei de e-mail, a smtp-ului, si uneori poate oferi sugestii "did you mean ... ?".
 
-Flux de date 
+<h2>Flux de date</h2>
 
 Prima data, utilizatorul poate intra in aplicatie, si va ajunge pe pagina principala, unde se afla 2 butoane, "Get the art" si "Display paintings". Primul buton face un request catre api-ul de la Hardvard, iar al doilea afiseaza lista sau ii face refresh. De fiecare data cand primul buton este apasat, se face un nou request catre api-ul de la Hardvard, si se intoarce un nou set de imagini, iar cand se apasa pe display, lista se reincarca cu aceste noi imagini.
 
 Dupa ce userul a parcurs lista de imagini, poate apasa pe butonul "Get painting" din dreptul imaginii, si va fi redirectionat catre o alta pagina ce contine un formular, unde acesta va trebui sa introduca numele sau, e-mailul, adresa si numarul de telefon. Prin apasarea butonului "Get painting", si dupa verificarea e-mailului printr-un request catre api-ul de la mailboxlayer pentru a verifica daca adresa introdusa este corecta, acesta va primi un e-mail la adresa introdusa, de tipul:
 
-Hello, Madalina Mirza
+*Hello, Madalina Mirza*
 
-Thank you for using PaintingsApp.
+*Thank you for using PaintingsApp.*
 
-You have requested the painting Abstract painting
+*You have requested the painting Abstract painting*
 
-Url: https://nrs.harvard.edu/urn-3:HUAM:70296_dynmc
+*Url: https://nrs.harvard.edu/urn-3:HUAM:70296_dynmc*
 
-The painting will be sent to the address Strada Florilor shortly.
+*The painting will be sent to the address Strada Florilor shortly.*
 
 
-PaintingsApp.
+*PaintingsApp.*
 
-Image: 
+*Image:*
 
 
 Iar sub "Image:" va aparea imaginea ceruta. 
@@ -42,7 +42,7 @@ Ca si idee, tabloul cu imaginea respectiva ar fi mai departe trimis de catre un 
 
 
 
-Exemple de request / response
+<h2>Exemple de request / response</h2>
 
 
 
@@ -59,6 +59,8 @@ console.log(records);
 Acest request este introdus direct in codul paginii index.html printr-un script.
 
 Ca response, va primi lista de obiecte de la Hardvard in format JSON, ce va fi mai departe parcursa si introdusa in baza de date, printr-un request catre server, folosind axios.
+
+```javascript
 
 const urls = new Array();
                 
@@ -104,10 +106,11 @@ records.forEach(element => {
       alert('Resource could not be saved');
   });
 });
-
+```
 
 Iar in server, request-ul arata asa:
 
+```javascript
 app.post('/paintings', (req, res) => {
     Painting.create(req.body).then((result) => {
         res.status(201).json(result);
@@ -116,11 +119,13 @@ app.post('/paintings', (req, res) => {
         res.status(500).send("resource not created");
     });
 });
+```
 
 
 
 Un alt tip de request este facut la apasarea butonului "Get painting":
 
+```javascript
 axios.get('/paintings/'+id).then(function(result) {
                     
   localStorage.setItem('id', result.data.id);
@@ -133,9 +138,11 @@ axios.get('/paintings/'+id).then(function(result) {
     console.log(err)
     alert('Could not find resource')
 })
+```
 
 Acesta este un request facut prin axios catre server, ce primeste detalii despre o imagine din baza de date.
 
+```javascript
 app.get('/paintings/:id', (req, res) => {
     Painting.findByPk(req.params.id).then((result) => {
         if(result) {
@@ -148,17 +155,17 @@ app.get('/paintings/:id', (req, res) => {
         res.status(500).send('database error');
     });
 });
-
+```
 
 Se primeste un response de tip json, cu detaliile despre imaginea respectiva: nume, url, copyright, etc.
 
 
-Autentificare și autorizare servicii utilizate (dacă este cazul)
+<h2>Autentificare si autorizare servicii utilizate</h2>
 
 Serviciile api folosesc cate un apiKey, care sunt momentan puse in clar in cod.
 
 
-Capturi ecran aplicație 
+<h2>Capturi ecran aplicatie</h2>
 
 Prima pagina:
 
@@ -174,6 +181,12 @@ Pagina cu formularul:
 
 
 
+<h2>Referinte</h2>
+
+https://www.harvardartmuseums.org/ - automatic!
+
+https://mailboxlayer.com/ - automatic!
 
 
-Referinte
+
+
