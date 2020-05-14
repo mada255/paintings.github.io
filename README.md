@@ -48,13 +48,14 @@ Ca si idee, tabloul cu imaginea respectiva ar fi mai departe trimis de catre un 
 
 Primul api primeste un request printr-o metoda asincrona si folosind metoda "fetch()" astfel: 
 
-console.log(pageNum);
+```javascript
 const response = await fetch('https://api.harvardartmuseums.org/image?apikey=' + apiKey + '&page=' + pageNum);
 const data = await response.json();
                 
 const { info, records } = data
                 
 console.log(records);
+```
 
 Acest request este introdus direct in codul paginii index.html printr-un script.
 
