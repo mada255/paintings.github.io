@@ -1,0 +1,21 @@
+{
+  "name": "cloud",
+  "version": "1.0.0",
+  "description": "Single page app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "madalina",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^1.3.1",
+    "googleapis": "^26.0.1",
+    "mysql2": "^2.1.0",
+    "nodemailer": "^6.4.6",
+    "sequelize": "^5.21.7"
+  }
+}

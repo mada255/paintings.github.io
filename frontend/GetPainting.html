@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add painting</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        
+        <h2 class="form-style-7">Painting: 
+            <span id="imagename">5</span><br /><br />
+            <img src="" id="image" width="150px" >
+        </h2>
+        
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+        
+        <script>
+        
+            const init = function(e){
+                let spn_name = document.querySelector('#imagename');
+                let spn_image = document.querySelector('#imageurl');
+                let id = localStorage.getItem('id');
+                let name = localStorage.getItem('name');
+                let image = localStorage.getItem('imageurl');
+                document.getElementById('image').src = image;
+                spn_name.innerHTML = name;
+                spn_image.innerHTML = image;
+            };
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                init();
+            });
+            
+            async function checkEmail(email){
+                const emailAddress = document.getElementById('email').textContent;
+                const url = 'https://apilayer.net/api/check?access_key=3d02a68683e6beea2ed4da155a9fcf9a&email=' + email + '&smtp=1&format=1';
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log(data);
+                
+                var msg = "";
+                
+                if(data.format_valid  == false){
+                    console.log('Email format is not valid');
+                    msg += "Email format is not valid\n";
+                }
+                    
+                    
+                if(data.smtp_check == false){
+                    console.log('Email domain is not valid');
+                    msg += "Email domain is not valid\n";
+                }
+                    
+                    
+                if(data.did_you_mean != ""){
+                    console.log('Did you mean ' + data.did_you_mean + ' ? ');
+                    msg += 'Did you mean ' + data.did_you_mean + ' ? ';
+                }
+                
+                if(msg != "")
+                    window.alert(msg);
+                    
+                
+                return data;
+            }
+            
+        </script>
+        
+        <p align="center" class="form-style-7">Provide your information for receiving the painting</p>
+        <form class="form-style-7" onSubmit="savePainting(event)">
+        <ul>
+        <li>
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" maxlength="100">
+            <span>Enter your full name here</span>
+        </li>
+        <li>
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" maxlength="100">
+            <span>Enter a valid email address</span>
+        </li>
+        <li>
+            <label for="address">Address</label>
+            <input id="address" type="text" name="address" maxlength="100">
+            <span>Your home address for receiving the painting</span>
+        </li>
+        <li>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="text">
+            <span>Your phone number in case we cannot find you</span>
+        </li>
+        <li>
+            <input type="submit" value="Get painting">
+            <input type="reset" value="Cancel" onClick="document.location = 'index.html'">
+        </li>
+        </ul>
+        </form>
+        
+        
+        <script type="text/javascript">
+        
+            function savePainting(event) {
+                event.preventDefault();
+                
+                let imageurl = localStorage.getItem('imageurl');
+                let imagename = localStorage.getItem('name');
+                
+                let id = $('#id').val();
+                let name = $('#name').val();
+                let email = $('#email').val();
+                let address = $('#address').val();
+                let phone = $('#phone').val();
+                
+                const data = checkEmail(email);
+                
+                if(data.smtp_check == false || data.format_valid == false){
+                    console.log('Cannot get painting');
+                    return;
+                }
+            
+
+                axios.post('/persons', {
+                    name: name,
+                    email: email,
+                    address: address,
+                    phone: phone,
+                    imageurl: imageurl
+                }).then(function(result) {
+                    $(event.target).trigger("reset");
+                }).catch(function(err) {
+                    alert('Resource could not be saved');
+                });
+                
+                var filename = imageurl.split('/').pop().split(':').pop();
+                
+                let subject = 'You have requested the painting ' + filename;
+                let text = 'Hello, ' + name + '<br /><br />Thank you for using PaintingsApp.<br /><br />' + 'You have requested the painting ' + imagename + '<br /><br />nUrl: ' + imageurl;
+                text += '<br /><br />The painting will be sent to the address ' + address + ' shortly.'
+                text += '<br /><br /><br/ >PaintingsApp.'
+                
+                axios.post('/sendmail', {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    imageurl: imageurl,
+                    text: text,
+                    subject: subject
+                }).then(function(result) {
+                    console.log(subject);
+                    console.log(text);
+                    console.log('email was sent');
+                    return;
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                
+                
+            
+            }
+            
+        </script>
+
+    </body>
+</html>

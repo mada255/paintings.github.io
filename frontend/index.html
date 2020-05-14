@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Paintings</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body style="background-color:#FEEBDF;">
+        <h2>Paintings</h2>
+        <br>
+        
+        <script>
+            var pageNum = 1;
+            
+            console.log('Getting the art..');
+            
+            async function getArt() {
+                console.log(pageNum);
+                const response = await fetch('https://api.harvardartmuseums.org/image?apikey=0dbc19b0-92f7-11ea-a6a8-f3247e01985f&page=' + pageNum);
+                const data = await response.json();
+                
+                const { info, records } = data
+                
+                console.log(records);
+                
+                const urls = new Array();
+                
+                let i = 0;
+                
+                records.forEach(element => {
+                    const url = new Object();
+                    url.date = element.date;
+                    url.baseimageurl = element.baseimageurl;
+                    url.copyright = element.copyright;
+                    urls[i] = url;
+                    i++;
+                });
+                                
+                
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify(urls)
+                }
+                
+                const apiresponse = await fetch('/artapi', options);
+                const json = await apiresponse.json();
+                console.log(json);
+
+                
+                records.forEach(element => {
+
+                    axios.post('/paintings', {
+                        name: "Abstract painting",
+                        artist: element.copyright,
+                        date: element.date,
+                        museum: "Hardvard Museum",
+                        city: "Cambridge",
+                        country: "USA",
+                        imageurl: element.baseimageurl
+                    }).then(function(result) {
+                        //showPaintings();
+                        //$(event.target).trigger("reset");
+                    }).catch(function(err) {
+                        alert('Resource could not be saved');
+                    });
+                });
+                
+                pageNum++;
+                
+            }
+            
+            
+        </script>
+        
+        <p align="center">
+            <input type="button" class="form-style-7" onClick="getArt()" value="Get the art"/>
+            <input type="button" class="form-style-7" onClick="showPaintings()" value="Refresh display"/>
+        </p>
+        
+        
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+        
+        <div id="table"></div>
+        
+                
+         <script type="text/javascript">
+            
+            function getPainting(id) {
+                axios.get('/paintings/'+id).then(function(result) {
+                    
+                    localStorage.setItem('id', result.data.id);
+                    localStorage.setItem('name', result.data.name);
+                    localStorage.setItem('imageurl', result.data.imageurl);
+                    
+                    window.document.location = './GetPainting.html';
+                    
+                }).catch(function(err) {
+                    console.log(err)
+                    alert('Could not find resource')
+                })
+                
+            }
+            
+            
+            function deletePainting(id) {
+                axios.delete('/paintings/'+id).then(function(result) {
+                    showPaintings();
+                }).catch(function(err) {
+                    alert('Could not delete resource');
+                });
+            }
+         
+            function savePainting(event) {
+                event.preventDefault();
+            
+                let id = $('#id').val();
+                let name = $('#name').val();
+                let artist = $('#artist').val();
+                let date = $('#date').val();
+                let museum = $('#museum').val();
+                let city = $('#city').val();
+                let country = $('#country').val();
+            
+                if(id) {
+                    axios.put('/paintings/'+id, {
+                        name: name,
+                        artist: artist,
+                        date: date,
+                        museum: museum,
+                        city: city,
+                        country: country
+                    }).then(function(result) {
+                        showPaintings();
+                        $(event.target).trigger("reset");
+                    }).catch(function(err) {
+                        alert('Resource could not be saved');
+                    });
+                    
+                } else {
+                    axios.post('/paintings', {
+                        name: name,
+                        artist: artist,
+                        date: date,
+                        museum: museum,
+                        city: city,
+                        country: country
+                    }).then(function(result) {
+                        showPaintings();
+                        $(event.target).trigger("reset");
+                    }).catch(function(err) {
+                        alert('Resource could not be saved');
+                    });
+                }
+            
+            }
+            
+            function showPaintings() {
+                
+                axios.get('/paintings').then(function(results) {
+                    
+                    
+                    
+                    let html = ` <table style="width:90%;">
+                            <tr>
+                                <th>Name</th>
+                                <th width="120px">Copyright</th> 
+                                <th>Date</th>
+                                <th>Museum</th>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Picture</th>
+                                <th width="150px">Actions</th>
+                            </tr>`;
+                    
+                    
+                    results.data.forEach(async function(element) {
+                        
+                        html += `<tr>
+                                    <td>${element.name}</td>
+                                    <td width="120px">${element.artist}</td>
+                                    <td>${element.date}</td>
+                                    <td>${element.museum}</td>
+                                    <td>${element.city}</td>
+                                    <td>${element.country}</td>
+                                    <td><img src="${element.imageurl}" alt="Hardvard museum photo" width="200"></td>
+                                    <td width="150px">
+                                        <input type="submit" class="form-style-7" onClick="getPainting(${element.id})" value="Get painting">
+                                        <input type="reset" class="form-style-7" onClick="deletePainting(${element.id})" value="Delete">
+                                    </td>
+                                </tr>`;
+                        
+                    });
+            
+                    html += `</table>`;
+            
+                    $('#table').html(html)
+
+                }).catch(function(error) {
+                    console.log(error);
+                });
+                
+            }
+            
+            $(document).ready(function() {
+                showPaintings();
+            });
+        </script>
+        
+        
+        
+    </body>
+    
+</html>
