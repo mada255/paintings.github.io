@@ -180,7 +180,14 @@ Pagina cu formularul:
 ![Pagina cu formularul](/Capture2.JPG)
 
 
+Exemplu alerta validare mailboxlayer: 
 
+![Alerta validare](/MesajValidare.JPG)
+
+
+Exemplu raspuns JSON mailboxlayer:
+
+![Json mailboxlayer](/MailboxLayer.JPG)
 
 <h2>Referinte</h2>
 
