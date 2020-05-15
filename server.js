@@ -219,14 +219,11 @@ app.post('/sendmail', (req , res) =>{
         service: 'gmail',
         auth: {
             type: 'OAuth2',
-            //user: 'paintings.app@gmail.com',
-            //pass: 'bFVeQN2cGPA3UB6'
-            type: 'OAuth2',
             user: 'paintings.app@gmail.com',
             clientId: '809189065127-j2dj5cae1e5p428abmeoo3qlevd5vg08.apps.googleusercontent.com',
             clientSecret: 'C7jv0pUF3PIn6SQvPoUhuU6C',
-            refreshToken: '1//04_pzOdzuVfumCgYIARAAGAQSNwF-L9IrkoR7RZBWs6o-iLzTvC0IAQgbIH3uW0DB5WcWgUtDpp3bcar2QkW2l1rrdQ5KuyJJ_FQ',
-            accessToken: 'ya29.a0AfH6SMDigCYxeb7NI0c10xa1nl6y0ujD5AYPOVbhdvluTdJ2EaSfgKkYWO2wJhQq3FPsn-tpMeKL3phsFQEvuqKPFiHu67EHoemHFt6JdMyPlqmos9MBYMswf7nyzAAbVb3hBk_qelh3t79mqec_8I3F98mdfXm4rdU'
+            refreshToken: '1//04_pzOdzuVfumCgYIARAAGAQSNwF-L9IrkoR7RZBWs6o-iLzTvC0IAQgbIH3uW0DB5WcWgUtDpp3bcar2QkW2l1rrdQ5KuyJJ_FQ'
+            //accessToken: 'ya29.a0AfH6SMDigCYxeb7NI0c10xa1nl6y0ujD5AYPOVbhdvluTdJ2EaSfgKkYWO2wJhQq3FPsn-tpMeKL3phsFQEvuqKPFiHu67EHoemHFt6JdMyPlqmos9MBYMswf7nyzAAbVb3hBk_qelh3t79mqec_8I3F98mdfXm4rdU'
         }
     });
     
