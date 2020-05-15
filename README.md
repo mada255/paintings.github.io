@@ -189,6 +189,17 @@ Exemplu raspuns JSON mailboxlayer:
 
 ![Json mailboxlayer](/MailboxLayer.PNG)
 
+
+Exemplu raspuns JSON hardvardmuseums:
+
+![Json hardvard](/HardvardJson.PNG)
+
+
+Exemplu e-mail primit prin nodemailer:
+
+![Email](/Email.PNG)
+
+
 <h2>Referinte</h2>
 
 https://www.harvardartmuseums.org/ 
