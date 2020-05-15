@@ -243,7 +243,7 @@ app.post('/sendmail', (req , res) =>{
                 attachments: [{
                     filename: filename + '.jpg',
                     path: path1,
-                    cid: 'unique@kreata.ee' //same cid value as in the html img src
+                    cid: 'unique@kreata.ee' 
                 }]
             };
             
