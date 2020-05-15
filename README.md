@@ -182,7 +182,7 @@ Pagina cu formularul:
 
 Exemplu alerta validare mailboxlayer: 
 
-![Alerta validare](/MesajValidare.PNG)
+![Alerta validare](/Valid.PNG)
 
 
 Exemplu raspuns JSON mailboxlayer:
