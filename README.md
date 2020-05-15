@@ -12,7 +12,7 @@ Aplicatia pune la dispozitie o lista de imagini, care sunt procurate folosind un
 
 Am folosit 2 api-uri, unul de la muzeul hardvard (https://www.harvardartmuseums.org/), ce returneaza o lista de obiecte in format JSON, alcatuite din: url-ul imaginii, data, copyright.
 
-Un alt api folosit este cel de la mailboxlayer, pentru verificarea adresei de e-mail introdusa de utilizator. Acest api primeste un request, si trimite inapoi un raspuns ce contine date despre corectitudinea formatului adresei de e-mail, a smtp-ului, si uneori poate oferi sugestii "did you mean ... ?".
+Un alt api folosit este cel de la mailboxlayer (https://mailboxlayer.com/), pentru verificarea adresei de e-mail introdusa de utilizator. Acest api primeste un request, si trimite inapoi un raspuns ce contine date despre corectitudinea formatului adresei de e-mail, a smtp-ului, si uneori poate oferi sugestii "did you mean ... ?".
 
 <h2>Flux de date</h2>
 
